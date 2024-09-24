@@ -32,6 +32,7 @@ service SPDKService {
     rpc ReplicaBackupStatus(BackupStatusRequest) returns (BackupStatusResponse) {}
     rpc ReplicaBackupRestore(ReplicaBackupRestoreRequest) returns (google.protobuf.Empty) {}
     rpc ReplicaRestoreStatus(ReplicaRestoreStatusRequest) returns (ReplicaRestoreStatusResponse) {}
+    rpc ReplicaVolumeExpand(ExpandRequest) returns (google.protobuf.Empty) {}
 
     rpc EngineCreate(EngineCreateRequest) returns (Engine);
     rpc EngineDelete(EngineDeleteRequest) returns (google.protobuf.Empty);
@@ -53,6 +54,7 @@ service SPDKService {
     rpc EngineBackupStatus(BackupStatusRequest) returns (BackupStatusResponse) {}
     rpc EngineBackupRestore(EngineBackupRestoreRequest) returns (EngineBackupRestoreResponse) {}
     rpc EngineRestoreStatus(RestoreStatusRequest) returns (RestoreStatusResponse) {}
+    rpc EngineVolumeExpand(ExpandRequest) returns (google.protobuf.Empty) {}
 
     rpc DiskCreate(DiskCreateRequest) returns (Disk);
     rpc DiskDelete(DiskDeleteRequest) returns (google.protobuf.Empty);
@@ -474,3 +476,9 @@ message LogGetLevelResponse {
 message LogGetFlagsResponse {
 	string flags = 1;
 }
+
+message ExpandRequest {
+    string name = 1;
+    uint64 size = 2;
+  }
+  

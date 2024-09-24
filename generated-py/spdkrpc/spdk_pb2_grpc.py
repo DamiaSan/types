@@ -140,6 +140,11 @@ class SPDKServiceStub(object):
                 request_serializer=spdkrpc_dot_spdk__pb2.ReplicaRestoreStatusRequest.SerializeToString,
                 response_deserializer=spdkrpc_dot_spdk__pb2.ReplicaRestoreStatusResponse.FromString,
                 )
+        self.ReplicaVolumeExpand = channel.unary_unary(
+                '/spdkrpc.SPDKService/ReplicaVolumeExpand',
+                request_serializer=spdkrpc_dot_spdk__pb2.ExpandRequest.SerializeToString,
+                response_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
+                )
         self.EngineCreate = channel.unary_unary(
                 '/spdkrpc.SPDKService/EngineCreate',
                 request_serializer=spdkrpc_dot_spdk__pb2.EngineCreateRequest.SerializeToString,
@@ -239,6 +244,11 @@ class SPDKServiceStub(object):
                 '/spdkrpc.SPDKService/EngineRestoreStatus',
                 request_serializer=spdkrpc_dot_spdk__pb2.RestoreStatusRequest.SerializeToString,
                 response_deserializer=spdkrpc_dot_spdk__pb2.RestoreStatusResponse.FromString,
+                )
+        self.EngineVolumeExpand = channel.unary_unary(
+                '/spdkrpc.SPDKService/EngineVolumeExpand',
+                request_serializer=spdkrpc_dot_spdk__pb2.ExpandRequest.SerializeToString,
+                response_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
                 )
         self.DiskCreate = channel.unary_unary(
                 '/spdkrpc.SPDKService/DiskCreate',
@@ -435,6 +445,12 @@ class SPDKServiceServicer(object):
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
+    def ReplicaVolumeExpand(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
     def EngineCreate(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
@@ -550,6 +566,12 @@ class SPDKServiceServicer(object):
         raise NotImplementedError('Method not implemented!')
 
     def EngineRestoreStatus(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def EngineVolumeExpand(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
@@ -731,6 +753,11 @@ def add_SPDKServiceServicer_to_server(servicer, server):
                     request_deserializer=spdkrpc_dot_spdk__pb2.ReplicaRestoreStatusRequest.FromString,
                     response_serializer=spdkrpc_dot_spdk__pb2.ReplicaRestoreStatusResponse.SerializeToString,
             ),
+            'ReplicaVolumeExpand': grpc.unary_unary_rpc_method_handler(
+                    servicer.ReplicaVolumeExpand,
+                    request_deserializer=spdkrpc_dot_spdk__pb2.ExpandRequest.FromString,
+                    response_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
+            ),
             'EngineCreate': grpc.unary_unary_rpc_method_handler(
                     servicer.EngineCreate,
                     request_deserializer=spdkrpc_dot_spdk__pb2.EngineCreateRequest.FromString,
@@ -830,6 +857,11 @@ def add_SPDKServiceServicer_to_server(servicer, server):
                     servicer.EngineRestoreStatus,
                     request_deserializer=spdkrpc_dot_spdk__pb2.RestoreStatusRequest.FromString,
                     response_serializer=spdkrpc_dot_spdk__pb2.RestoreStatusResponse.SerializeToString,
+            ),
+            'EngineVolumeExpand': grpc.unary_unary_rpc_method_handler(
+                    servicer.EngineVolumeExpand,
+                    request_deserializer=spdkrpc_dot_spdk__pb2.ExpandRequest.FromString,
+                    response_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
             ),
             'DiskCreate': grpc.unary_unary_rpc_method_handler(
                     servicer.DiskCreate,
@@ -1307,6 +1339,23 @@ class SPDKService(object):
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
     @staticmethod
+    def ReplicaVolumeExpand(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/spdkrpc.SPDKService/ReplicaVolumeExpand',
+            spdkrpc_dot_spdk__pb2.ExpandRequest.SerializeToString,
+            google_dot_protobuf_dot_empty__pb2.Empty.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
     def EngineCreate(request,
             target,
             options=(),
@@ -1643,6 +1692,23 @@ class SPDKService(object):
         return grpc.experimental.unary_unary(request, target, '/spdkrpc.SPDKService/EngineRestoreStatus',
             spdkrpc_dot_spdk__pb2.RestoreStatusRequest.SerializeToString,
             spdkrpc_dot_spdk__pb2.RestoreStatusResponse.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def EngineVolumeExpand(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/spdkrpc.SPDKService/EngineVolumeExpand',
+            spdkrpc_dot_spdk__pb2.ExpandRequest.SerializeToString,
+            google_dot_protobuf_dot_empty__pb2.Empty.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 

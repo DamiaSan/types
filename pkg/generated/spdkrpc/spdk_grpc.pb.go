@@ -45,6 +45,7 @@ const (
 	SPDKService_ReplicaBackupStatus_FullMethodName                  = "/spdkrpc.SPDKService/ReplicaBackupStatus"
 	SPDKService_ReplicaBackupRestore_FullMethodName                 = "/spdkrpc.SPDKService/ReplicaBackupRestore"
 	SPDKService_ReplicaRestoreStatus_FullMethodName                 = "/spdkrpc.SPDKService/ReplicaRestoreStatus"
+	SPDKService_ReplicaVolumeExpand_FullMethodName                  = "/spdkrpc.SPDKService/ReplicaVolumeExpand"
 	SPDKService_EngineCreate_FullMethodName                         = "/spdkrpc.SPDKService/EngineCreate"
 	SPDKService_EngineDelete_FullMethodName                         = "/spdkrpc.SPDKService/EngineDelete"
 	SPDKService_EngineGet_FullMethodName                            = "/spdkrpc.SPDKService/EngineGet"
@@ -65,6 +66,7 @@ const (
 	SPDKService_EngineBackupStatus_FullMethodName                   = "/spdkrpc.SPDKService/EngineBackupStatus"
 	SPDKService_EngineBackupRestore_FullMethodName                  = "/spdkrpc.SPDKService/EngineBackupRestore"
 	SPDKService_EngineRestoreStatus_FullMethodName                  = "/spdkrpc.SPDKService/EngineRestoreStatus"
+	SPDKService_EngineVolumeExpand_FullMethodName                   = "/spdkrpc.SPDKService/EngineVolumeExpand"
 	SPDKService_DiskCreate_FullMethodName                           = "/spdkrpc.SPDKService/DiskCreate"
 	SPDKService_DiskDelete_FullMethodName                           = "/spdkrpc.SPDKService/DiskDelete"
 	SPDKService_DiskGet_FullMethodName                              = "/spdkrpc.SPDKService/DiskGet"
@@ -104,6 +106,7 @@ type SPDKServiceClient interface {
 	ReplicaBackupStatus(ctx context.Context, in *BackupStatusRequest, opts ...grpc.CallOption) (*BackupStatusResponse, error)
 	ReplicaBackupRestore(ctx context.Context, in *ReplicaBackupRestoreRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	ReplicaRestoreStatus(ctx context.Context, in *ReplicaRestoreStatusRequest, opts ...grpc.CallOption) (*ReplicaRestoreStatusResponse, error)
+	ReplicaVolumeExpand(ctx context.Context, in *ExpandRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	EngineCreate(ctx context.Context, in *EngineCreateRequest, opts ...grpc.CallOption) (*Engine, error)
 	EngineDelete(ctx context.Context, in *EngineDeleteRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	EngineGet(ctx context.Context, in *EngineGetRequest, opts ...grpc.CallOption) (*Engine, error)
@@ -124,6 +127,7 @@ type SPDKServiceClient interface {
 	EngineBackupStatus(ctx context.Context, in *BackupStatusRequest, opts ...grpc.CallOption) (*BackupStatusResponse, error)
 	EngineBackupRestore(ctx context.Context, in *EngineBackupRestoreRequest, opts ...grpc.CallOption) (*EngineBackupRestoreResponse, error)
 	EngineRestoreStatus(ctx context.Context, in *RestoreStatusRequest, opts ...grpc.CallOption) (*RestoreStatusResponse, error)
+	EngineVolumeExpand(ctx context.Context, in *ExpandRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	DiskCreate(ctx context.Context, in *DiskCreateRequest, opts ...grpc.CallOption) (*Disk, error)
 	DiskDelete(ctx context.Context, in *DiskDeleteRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	DiskGet(ctx context.Context, in *DiskGetRequest, opts ...grpc.CallOption) (*Disk, error)
@@ -390,6 +394,15 @@ func (c *sPDKServiceClient) ReplicaRestoreStatus(ctx context.Context, in *Replic
 	return out, nil
 }
 
+func (c *sPDKServiceClient) ReplicaVolumeExpand(ctx context.Context, in *ExpandRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+	out := new(emptypb.Empty)
+	err := c.cc.Invoke(ctx, SPDKService_ReplicaVolumeExpand_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *sPDKServiceClient) EngineCreate(ctx context.Context, in *EngineCreateRequest, opts ...grpc.CallOption) (*Engine, error) {
 	out := new(Engine)
 	err := c.cc.Invoke(ctx, SPDKService_EngineCreate_FullMethodName, in, out, opts...)
@@ -593,6 +606,15 @@ func (c *sPDKServiceClient) EngineRestoreStatus(ctx context.Context, in *Restore
 	return out, nil
 }
 
+func (c *sPDKServiceClient) EngineVolumeExpand(ctx context.Context, in *ExpandRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+	out := new(emptypb.Empty)
+	err := c.cc.Invoke(ctx, SPDKService_EngineVolumeExpand_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *sPDKServiceClient) DiskCreate(ctx context.Context, in *DiskCreateRequest, opts ...grpc.CallOption) (*Disk, error) {
 	out := new(Disk)
 	err := c.cc.Invoke(ctx, SPDKService_DiskCreate_FullMethodName, in, out, opts...)
@@ -694,6 +716,7 @@ type SPDKServiceServer interface {
 	ReplicaBackupStatus(context.Context, *BackupStatusRequest) (*BackupStatusResponse, error)
 	ReplicaBackupRestore(context.Context, *ReplicaBackupRestoreRequest) (*emptypb.Empty, error)
 	ReplicaRestoreStatus(context.Context, *ReplicaRestoreStatusRequest) (*ReplicaRestoreStatusResponse, error)
+	ReplicaVolumeExpand(context.Context, *ExpandRequest) (*emptypb.Empty, error)
 	EngineCreate(context.Context, *EngineCreateRequest) (*Engine, error)
 	EngineDelete(context.Context, *EngineDeleteRequest) (*emptypb.Empty, error)
 	EngineGet(context.Context, *EngineGetRequest) (*Engine, error)
@@ -714,6 +737,7 @@ type SPDKServiceServer interface {
 	EngineBackupStatus(context.Context, *BackupStatusRequest) (*BackupStatusResponse, error)
 	EngineBackupRestore(context.Context, *EngineBackupRestoreRequest) (*EngineBackupRestoreResponse, error)
 	EngineRestoreStatus(context.Context, *RestoreStatusRequest) (*RestoreStatusResponse, error)
+	EngineVolumeExpand(context.Context, *ExpandRequest) (*emptypb.Empty, error)
 	DiskCreate(context.Context, *DiskCreateRequest) (*Disk, error)
 	DiskDelete(context.Context, *DiskDeleteRequest) (*emptypb.Empty, error)
 	DiskGet(context.Context, *DiskGetRequest) (*Disk, error)
@@ -804,6 +828,9 @@ func (UnimplementedSPDKServiceServer) ReplicaBackupRestore(context.Context, *Rep
 func (UnimplementedSPDKServiceServer) ReplicaRestoreStatus(context.Context, *ReplicaRestoreStatusRequest) (*ReplicaRestoreStatusResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ReplicaRestoreStatus not implemented")
 }
+func (UnimplementedSPDKServiceServer) ReplicaVolumeExpand(context.Context, *ExpandRequest) (*emptypb.Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ReplicaVolumeExpand not implemented")
+}
 func (UnimplementedSPDKServiceServer) EngineCreate(context.Context, *EngineCreateRequest) (*Engine, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method EngineCreate not implemented")
 }
@@ -863,6 +890,9 @@ func (UnimplementedSPDKServiceServer) EngineBackupRestore(context.Context, *Engi
 }
 func (UnimplementedSPDKServiceServer) EngineRestoreStatus(context.Context, *RestoreStatusRequest) (*RestoreStatusResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method EngineRestoreStatus not implemented")
+}
+func (UnimplementedSPDKServiceServer) EngineVolumeExpand(context.Context, *ExpandRequest) (*emptypb.Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method EngineVolumeExpand not implemented")
 }
 func (UnimplementedSPDKServiceServer) DiskCreate(context.Context, *DiskCreateRequest) (*Disk, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DiskCreate not implemented")
@@ -1354,6 +1384,24 @@ func _SPDKService_ReplicaRestoreStatus_Handler(srv interface{}, ctx context.Cont
 	return interceptor(ctx, in, info, handler)
 }
 
+func _SPDKService_ReplicaVolumeExpand_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ExpandRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SPDKServiceServer).ReplicaVolumeExpand(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: SPDKService_ReplicaVolumeExpand_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SPDKServiceServer).ReplicaVolumeExpand(ctx, req.(*ExpandRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _SPDKService_EngineCreate_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(EngineCreateRequest)
 	if err := dec(in); err != nil {
@@ -1717,6 +1765,24 @@ func _SPDKService_EngineRestoreStatus_Handler(srv interface{}, ctx context.Conte
 	return interceptor(ctx, in, info, handler)
 }
 
+func _SPDKService_EngineVolumeExpand_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ExpandRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SPDKServiceServer).EngineVolumeExpand(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: SPDKService_EngineVolumeExpand_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SPDKServiceServer).EngineVolumeExpand(ctx, req.(*ExpandRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _SPDKService_DiskCreate_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(DiskCreateRequest)
 	if err := dec(in); err != nil {
@@ -1965,6 +2031,10 @@ var SPDKService_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _SPDKService_ReplicaRestoreStatus_Handler,
 		},
 		{
+			MethodName: "ReplicaVolumeExpand",
+			Handler:    _SPDKService_ReplicaVolumeExpand_Handler,
+		},
+		{
 			MethodName: "EngineCreate",
 			Handler:    _SPDKService_EngineCreate_Handler,
 		},
@@ -2039,6 +2109,10 @@ var SPDKService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "EngineRestoreStatus",
 			Handler:    _SPDKService_EngineRestoreStatus_Handler,
+		},
+		{
+			MethodName: "EngineVolumeExpand",
+			Handler:    _SPDKService_EngineVolumeExpand_Handler,
 		},
 		{
 			MethodName: "DiskCreate",
