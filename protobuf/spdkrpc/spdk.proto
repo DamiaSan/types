@@ -29,6 +29,7 @@ service SPDKService {
     rpc ReplicaBackupStatus(BackupStatusRequest) returns (BackupStatusResponse) {}
     rpc ReplicaBackupRestore(ReplicaBackupRestoreRequest) returns (google.protobuf.Empty) {}
     rpc ReplicaRestoreStatus(ReplicaRestoreStatusRequest) returns (ReplicaRestoreStatusResponse) {}
+    rpc ReplicaVolumeExpand(ExpandRequest) returns (google.protobuf.Empty) {}
 
     rpc EngineCreate(EngineCreateRequest) returns (Engine);
     rpc EngineDelete(EngineDeleteRequest) returns (google.protobuf.Empty);
@@ -51,6 +52,7 @@ service SPDKService {
     rpc EngineBackupRestore(EngineBackupRestoreRequest) returns (EngineBackupRestoreResponse) {}
     rpc EngineBackupRestoreFinish(EngineBackupRestoreFinishRequest) returns (google.protobuf.Empty) {}  // Deprecated: retained for compatibility with v1.7.x and earlier versions.
     rpc EngineRestoreStatus(RestoreStatusRequest) returns (RestoreStatusResponse) {}
+    rpc EngineVolumeExpand(ExpandRequest) returns (google.protobuf.Empty) {}
 
     rpc BackingImageCreate(BackingImageCreateRequest) returns (BackingImage);
     rpc BackingImageDelete(BackingImageDeleteRequest) returns (google.protobuf.Empty);
@@ -526,4 +528,9 @@ message Metrics {
   uint64 writeLatency    = 4; 
   uint64 readIOPS        = 5;
   uint64 writeIOPS       = 6;
+}
+
+message ExpandRequest {
+    string name = 1;
+    uint64 size = 2;
 }
